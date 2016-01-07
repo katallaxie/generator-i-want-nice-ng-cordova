@@ -9,8 +9,7 @@
   },
   "files": [
     "app",
-    "templates",
-    ".babelrc"
+    "templates"
   ],
   "main": "app/index.js",
   "keywords": [
@@ -42,7 +41,10 @@
     "type": "git",
     "url": "git://github.com/katallaxie/generator-i-want-nice-ng-cordova.git"
   },
-  "scripts": {},
+  "scripts": {
+    "compile": "babel -d app/ src/",
+    "prepublish": "npm run compile"
+  },
   "engines": {
     "node": ">=5.3.0",
     "npm": ">=3.3.0"

@@ -19,3 +19,4 @@
 .VolumeIcon.icns
 *.log
 node_modules/
+app/
