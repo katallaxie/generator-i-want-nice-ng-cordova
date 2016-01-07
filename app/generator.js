@@ -106,12 +106,12 @@ var Generator = (function (_Yeoman) {
       // npm
       this.template('package.json', 'package.json');
       // git
-      this.copy('.gitignore');
-      this.copy('.gitattributes');
+      this.copy('gitignore', '.gitignore');
+      this.copy('gitattributes', '.gitattributes');
       // editorconfig
-      this.copy('.editorconfig');
+      this.copy('editorconfig', '.editorconfig');
       // eslint
-      this.copy('.eslintrc');
+      this.copy('eslintrc', '.eslintrc');
       // jspm
       this.copy('jspm.config.js');
       // styles
