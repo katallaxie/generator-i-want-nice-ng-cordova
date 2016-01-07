@@ -35,6 +35,36 @@ export default class Generator extends Yeoman {
   initializing() {
     // we have a different root for the sources
     this.sourceRoot(Path.join(__dirname, '../templates/app'));
+    // supported platforms
+    this.platforms = ['iOS', 'Android'];
+    // supported plugins
+    this.plugins = [
+      'cordova-plugin-inappbrowser',
+      'com.ionic.keyboard',
+      'cordova-plugin-battery-status',
+      'cordova-plugin-camera',
+      'cordova-plugin-console',
+      'cordova-plugin-contacts',
+      'cordova-plugin-device-motion',
+      'cordova-plugin-device-orientation',
+      'cordova-plugin-device',
+      'cordova-plugin-dialogs',
+      'cordova-plugin-file-transfer',
+      'cordova-plugin-file',
+      // 'cordova-plugin-whitelist',
+      'cordova-plugin-geolocation',
+      'cordova-plugin-globalization',
+      'cordova-plugin-inappbrowser',
+      'cordova-plugin-media-capture',
+      'cordova-plugin-media',
+      'cordova-plugin-network-information',
+      'cordova-plugin-splashscreen',
+      'cordova-plugin-statusbar',
+      'cordova-plugin-vibration',
+      'cordova-plugin-flashlight',
+      'cordova-plugin-secure-storage',
+      'cordova-plugin-crosswalk-webview'
+    ]
   }
 
   get prompting() {
@@ -54,7 +84,8 @@ export default class Generator extends Yeoman {
           type: 'input',
           name: 'app',
           message: `What's the name of your fun new app?`,
-          default: this.appname
+          default: this.appname,
+          store: true
         }];
 
         this.prompt(prompts, ( { app } ) => {
@@ -73,7 +104,8 @@ export default class Generator extends Yeoman {
           type: 'input',
           name: 'author',
           message: `Who is the author? It's you, right?`,
-          default: this.user.git.email()
+          default: this.user.git.email(),
+          store: true
         }];
 
         this.prompt(prompts, ( { author } ) => {
@@ -91,7 +123,8 @@ export default class Generator extends Yeoman {
           type: 'input',
           name: 'id',
           message: `What's the app store(s) identifier?`,
-          default: `com.${this.appname.toLowerCase()}`
+          default: `com.${this.appname.toLowerCase()}`,
+          store: true
         }];
 
         this.prompt(prompts, ( { id } ) => {
@@ -109,11 +142,60 @@ export default class Generator extends Yeoman {
           type: 'input',
           name: 'description',
           message: `What's is your great new app doing?`,
-          default: `Something really, really great ...`
+          default: `Something really, really great ...`,
+          store: true
         }];
 
         this.prompt(prompts, ( { description } ) => {
           this.description = description;
+          // resolve
+          done();
+        });
+      },
+
+      askForPlatforms() {
+        // async
+        let done = this.async();
+        // displaying
+        let prompts = [{
+          type: 'checkbox',
+          name: 'platforms',
+          message: `What are the platforms you plan to support?`,
+          choices: this.platforms,
+          default: this.platforms,
+          validate: (choices) => {
+            if (!choices.length > 0) {
+              return 'You have to choose, but do so wisely.';
+            }
+            return true;
+          },
+          required: true,
+          store: true
+        }];
+
+        this.prompt(prompts, ( { platforms } ) => {
+          this.platforms = platforms.map(platform => platform.toLowerCase());
+          // resolve
+          done();
+        });
+      },
+
+      askForPlugins() {
+        // async
+        let done = this.async();
+        // displaying
+        let prompts = [{
+          type: 'checkbox',
+          name: 'plugins',
+          message: `What plugins do you want to use?`,
+          choices: this.plugins,
+          default: this.plugins,
+          required: true,
+          store: true
+        }];
+
+        this.prompt(prompts, ( { plugins } ) => {
+          this.plugins = plugins.map(plugin => plugin.toLowerCase());
           // resolve
           done();
         });
@@ -131,7 +213,7 @@ export default class Generator extends Yeoman {
     }
     // grunt
     this.directory('grunt');
-    this.copy('Gruntfile.js');
+    this.template('Gruntfile.js');
     // cordova
     this.copy('build.json');
     // npm
@@ -171,6 +253,9 @@ export default class Generator extends Yeoman {
   }
 
   end() {
+    // saving config
+    this.config.save();
+    // in case you wanted to skip install
     if (this.options['skip-install']) {
       Util.log([`\nPlease have '${Chalk.yellow.bold('npm install')}' run.`,
         `Afterwards run '${Chalk.yellow.bold('npm fun')}' or '${Chalk.yellow.bold('npm fun')}'`].join('\n'));

@@ -88,6 +88,12 @@ var Generator = (function (_Yeoman) {
     value: function initializing() {
       // we have a different root for the sources
       this.sourceRoot(_path2.default.join(__dirname, '../templates/app'));
+      // supported platforms
+      this.platforms = ['iOS', 'Android'];
+      // supported plugins
+      this.plugins = ['cordova-plugin-inappbrowser', 'com.ionic.keyboard', 'cordova-plugin-battery-status', 'cordova-plugin-camera', 'cordova-plugin-console', 'cordova-plugin-contacts', 'cordova-plugin-device-motion', 'cordova-plugin-device-orientation', 'cordova-plugin-device', 'cordova-plugin-dialogs', 'cordova-plugin-file-transfer', 'cordova-plugin-file',
+      // 'cordova-plugin-whitelist',
+      'cordova-plugin-geolocation', 'cordova-plugin-globalization', 'cordova-plugin-inappbrowser', 'cordova-plugin-media-capture', 'cordova-plugin-media', 'cordova-plugin-network-information', 'cordova-plugin-splashscreen', 'cordova-plugin-statusbar', 'cordova-plugin-vibration', 'cordova-plugin-flashlight', 'cordova-plugin-secure-storage', 'cordova-plugin-crosswalk-webview'];
     }
   }, {
     key: 'writing',
@@ -100,7 +106,7 @@ var Generator = (function (_Yeoman) {
       }
       // grunt
       this.directory('grunt');
-      this.copy('Gruntfile.js');
+      this.template('Gruntfile.js');
       // cordova
       this.copy('build.json');
       // npm
@@ -143,6 +149,9 @@ var Generator = (function (_Yeoman) {
   }, {
     key: 'end',
     value: function end() {
+      // saving config
+      this.config.save();
+      // in case you wanted to skip install
       if (this.options['skip-install']) {
         _util2.default.log(['\nPlease have \'' + _chalk2.default.yellow.bold('npm install') + '\' run.', 'Afterwards run \'' + _chalk2.default.yellow.bold('npm fun') + '\' or \'' + _chalk2.default.yellow.bold('npm fun') + '\''].join('\n'));
       }
@@ -166,7 +175,8 @@ var Generator = (function (_Yeoman) {
             type: 'input',
             name: 'app',
             message: 'What\'s the name of your fun new app?',
-            default: this.appname
+            default: this.appname,
+            store: true
           }];
 
           this.prompt(prompts, function (_ref) {
@@ -188,7 +198,8 @@ var Generator = (function (_Yeoman) {
             type: 'input',
             name: 'author',
             message: 'Who is the author? It\'s you, right?',
-            default: this.user.git.email()
+            default: this.user.git.email(),
+            store: true
           }];
 
           this.prompt(prompts, function (_ref2) {
@@ -209,7 +220,8 @@ var Generator = (function (_Yeoman) {
             type: 'input',
             name: 'id',
             message: 'What\'s the app store(s) identifier?',
-            default: 'com.' + this.appname.toLowerCase()
+            default: 'com.' + this.appname.toLowerCase(),
+            store: true
           }];
 
           this.prompt(prompts, function (_ref3) {
@@ -230,13 +242,72 @@ var Generator = (function (_Yeoman) {
             type: 'input',
             name: 'description',
             message: 'What\'s is your great new app doing?',
-            default: 'Something really, really great ...'
+            default: 'Something really, really great ...',
+            store: true
           }];
 
           this.prompt(prompts, function (_ref4) {
             var description = _ref4.description;
 
             _this5.description = description;
+            // resolve
+            done();
+          });
+        },
+        askForPlatforms: function askForPlatforms() {
+          var _this6 = this;
+
+          // async
+          var done = this.async();
+          // displaying
+          var prompts = [{
+            type: 'checkbox',
+            name: 'platforms',
+            message: 'What are the platforms you plan to support?',
+            choices: this.platforms,
+            default: this.platforms,
+            validate: function validate(choices) {
+              if (!choices.length > 0) {
+                return 'You have to choose, but do so wisely.';
+              }
+              return true;
+            },
+            required: true,
+            store: true
+          }];
+
+          this.prompt(prompts, function (_ref5) {
+            var platforms = _ref5.platforms;
+
+            _this6.platforms = platforms.map(function (platform) {
+              return platform.toLowerCase();
+            });
+            // resolve
+            done();
+          });
+        },
+        askForPlugins: function askForPlugins() {
+          var _this7 = this;
+
+          // async
+          var done = this.async();
+          // displaying
+          var prompts = [{
+            type: 'checkbox',
+            name: 'plugins',
+            message: 'What plugins do you want to use?',
+            choices: this.plugins,
+            default: this.plugins,
+            required: true,
+            store: true
+          }];
+
+          this.prompt(prompts, function (_ref6) {
+            var plugins = _ref6.plugins;
+
+            _this7.plugins = plugins.map(function (plugin) {
+              return plugin.toLowerCase();
+            });
             // resolve
             done();
           });
