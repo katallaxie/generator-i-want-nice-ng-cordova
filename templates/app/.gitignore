@@ -1,0 +1,38 @@
+._*
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DocumentRevisions-V100
+.DS_Store
+.fseventsd
+.idea
+.LSOverride
+.settings
+.Spotlight-V100
+.sublime-grunt.cache
+.TemporaryItems
+.tmp
+.Trashes
+.VolumeIcon.icns
+
+# Some tools
+*.log
+.sass-cache
+.grunt
+
+# Node
+node_modules/
+
+# JSPM
+jspm_packages
+
+# Vim tmp files
+*.swp
+*.un~
+
+# Build
+build/
+reports/
+src/styles/base/_components.scss
+www/**/*
