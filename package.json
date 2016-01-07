@@ -9,7 +9,8 @@
   },
   "files": [
     "app",
-    "templates"
+    "templates",
+    ".babelrc"
   ],
   "main": "app/index.js",
   "keywords": [
