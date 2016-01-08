@@ -15,7 +15,7 @@ module.exports = (grunt, config) => {
         expand: true,
         cwd: config.path.tmp.base,
         src: [
-          'scripts/**/*.js'
+          'scripts/**/*.{js,map}'
         ],
         dest: config.path.dist.base
       }, {
