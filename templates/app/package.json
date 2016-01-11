@@ -40,6 +40,8 @@
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-cordova-icons": "^0.1.2",
+    "grunt-cordova-splashs": "^0.1.1",
     "grunt-cordovacli": "^0.8.2",
     "grunt-eslint": "^17.3.1",
     "grunt-filerev": "^2.3.1",
