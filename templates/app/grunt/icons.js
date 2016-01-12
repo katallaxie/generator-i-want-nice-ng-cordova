@@ -1,5 +1,5 @@
 /**
- * Grunt - cordova-icons (https://github.com/katallaxie/grunt-cordova-icons.git)
+ * Grunt - icons (https://github.com/katallaxie/grunt-cordova-icons)
  */
 module.exports = () => {
   // returning the config object

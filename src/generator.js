@@ -115,7 +115,7 @@ export default class Generator extends Yeoman {
         });
       },
 
-      askForId() {
+      askForId () {
         // async
         let done = this.async();
         // displaying
@@ -153,7 +153,7 @@ export default class Generator extends Yeoman {
         });
       },
 
-      askForPlatforms() {
+      askForPlatforms () {
         // async
         let done = this.async();
         // displaying
@@ -180,7 +180,26 @@ export default class Generator extends Yeoman {
         });
       },
 
-      askForPlugins() {
+      askForPhantomJS () {
+        // async
+        let done = this.async();
+        // displaying
+        let prompts = [{
+          type: 'input',
+          name: 'phantomjs',
+          message: `Where does your Phantom JS 2.x resides?`,
+          default: process.env.PHANTOMJS_BIN,
+          store: true
+        }];
+
+        this.prompt(prompts, ( { phantomjs } ) => {
+          this.phantomjs = phantomjs;
+          // resolve
+          done();
+        });
+      },
+
+      askForPlugins () {
         // async
         let done = this.async();
         // displaying
@@ -226,7 +245,7 @@ export default class Generator extends Yeoman {
     // eslint
     this.copy('_eslintrc', '.eslintrc');
     // karma
-    this.copy('karma.conf.js');
+    this.template('karma.conf.js');
     // jspm
     this.copy('jspm.config.js');
     // styles

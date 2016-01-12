@@ -119,7 +119,7 @@ var Generator = (function (_Yeoman) {
       // eslint
       this.copy('_eslintrc', '.eslintrc');
       // karma
-      this.copy('karma.conf.js');
+      this.template('karma.conf.js');
       // jspm
       this.copy('jspm.config.js');
       // styles
@@ -288,8 +288,30 @@ var Generator = (function (_Yeoman) {
             done();
           });
         },
-        askForPlugins: function askForPlugins() {
+        askForPhantomJS: function askForPhantomJS() {
           var _this7 = this;
+
+          // async
+          var done = this.async();
+          // displaying
+          var prompts = [{
+            type: 'input',
+            name: 'phantomjs',
+            message: 'Where does your Phantom JS 2.x resides?',
+            default: process.env.PHANTOMJS_BIN,
+            store: true
+          }];
+
+          this.prompt(prompts, function (_ref6) {
+            var phantomjs = _ref6.phantomjs;
+
+            _this7.phantomjs = phantomjs;
+            // resolve
+            done();
+          });
+        },
+        askForPlugins: function askForPlugins() {
+          var _this8 = this;
 
           // async
           var done = this.async();
@@ -304,10 +326,10 @@ var Generator = (function (_Yeoman) {
             store: true
           }];
 
-          this.prompt(prompts, function (_ref6) {
-            var plugins = _ref6.plugins;
+          this.prompt(prompts, function (_ref7) {
+            var plugins = _ref7.plugins;
 
-            _this7.plugins = plugins.map(function (plugin) {
+            _this8.plugins = plugins.map(function (plugin) {
               return plugin.toLowerCase();
             });
             // resolve
