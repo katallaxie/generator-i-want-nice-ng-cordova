@@ -225,6 +225,8 @@ export default class Generator extends Yeoman {
     this.copy('_editorconfig', '.editorconfig');
     // eslint
     this.copy('_eslintrc', '.eslintrc');
+    // karma
+    this.copy('karma.conf.js');
     // jspm
     this.copy('jspm.config.js');
     // styles

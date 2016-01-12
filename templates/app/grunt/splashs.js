@@ -1,11 +1,11 @@
 /**
  * Grunt - cordova-splashs (https://github.com/katallaxie/grunt-cordova-splashs.git)
  */
-module.exports = (grunt, config) => {
+module.exports = () => {
   // returning the config object
   return {
     all: {
-      files:
+      files: [{
         src: './splash.png',
         dest: 'build/res'
       }]

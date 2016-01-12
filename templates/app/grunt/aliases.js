@@ -11,9 +11,7 @@ module.exports = (grunt, config) => { // passing in grunt and the config
     },
     'dev': {
       description: 'Alias for \'fun\' task',
-      tasks: [
-        'fun'
-      ]
+      tasks: ['fun']
     },
     'fun': {
       description: 'Local development in the browser of choice (Default: Chrome)',
