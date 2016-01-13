@@ -82,6 +82,7 @@
     "load-grunt-tasks": "^3.4.0",
     "merge": "^1.2.0",
     "mocha": "^2.3.4",
+    "nightwatch": "^0.8.15",
     "phantomjs": "^1.9.19",
     "sinon": "^1.17.2",
     "systemjs": "^0.19.15",

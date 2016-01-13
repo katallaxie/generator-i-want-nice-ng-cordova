@@ -33,7 +33,7 @@ module.exports = config => {
     jspm: {
       config: 'jspm.config.js',
       loadFiles: ['src/app/app.js', 'src/app/**/*.spec.js'],
-      serveFiles: ['src/app/**/*.+(js)']
+      serveFiles: ['src/app/**/*.!(uat)+(js)']
     },
 
     // proxies

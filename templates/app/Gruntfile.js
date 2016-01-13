@@ -105,6 +105,8 @@ module.exports = (grunt) => { // trying to be nice
     jitGrunt: {
       staticMappings: {
         availabletasks: 'grunt-available-tasks',
+        splashs: 'grunt-cordova-splashs',
+        icons: 'grunt-cordova-icons',
         systemjs: 'grunt-systemjs-builder',
         usemin: 'grunt-usemin',
         useminPrepare: 'grunt-usemin'
