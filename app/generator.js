@@ -146,12 +146,14 @@ var Generator = (function (_Yeoman) {
       this.directory('src/app');
       // index.html
       this.template('src/index.html');
+      // icon
+      this.copy('icon.png');
+      // splash
+      this.copy('splash.png');
       // Write your files
       this.fs.write(this.destinationPath('README.md'), '# ' + this.app + '\n');
       // having the template as wanted
-      if (this.isAngular2) {
-        this.directory('../' + this.templates, this.destinationRoot() + '/src');
-      }
+      this.directory('../' + this.templates, this.destinationRoot() + '/src');
     }
   }, {
     key: 'default',
@@ -163,7 +165,7 @@ var Generator = (function (_Yeoman) {
     value: function installing() {
       // npm
       if (!this.options['skip-install']) {
-        this.runInstall('npm');
+        this.runInstall('npm', '', '--quiet');
       }
     }
   }, {

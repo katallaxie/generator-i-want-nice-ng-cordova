@@ -301,9 +301,7 @@ export default class Generator extends Yeoman {
     // Write your files
     this.fs.write( this.destinationPath( 'README.md' ), `# ${ this.app }\n` );
     // having the template as wanted
-    if ( this.isAngular2 ) {
-      this.directory( `../${this.templates}`, `${this.destinationRoot()}/src` );
-    }
+    this.directory( `../${this.templates}`, `${this.destinationRoot()}/src` );
   }
 
   default() {
