@@ -165,7 +165,7 @@ var Generator = (function (_Yeoman) {
     value: function installing() {
       // npm
       if (!this.options['skip-install']) {
-        this.runInstall('npm', '', '--quiet');
+        this.runInstall('npm', '');
       }
     }
   }, {

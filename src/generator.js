@@ -311,7 +311,7 @@ export default class Generator extends Yeoman {
   installing() {
     // npm
     if (!this.options['skip-install']) {
-      this.runInstall('npm', '', '--quiet');
+      this.runInstall('npm', '');
     }
   }
 

@@ -5,8 +5,8 @@
 The generator is coded in [ES6](https://github.com/lukehoban/es6features) with [Babel](https://babeljs.io/) as polyfill. Thus, it avoids much of the overhead in creating the generator.
 
 ## Features
-- Angular 2.0 and Angular 1.x with upgrade path
-- [Ionic 1.x](http://ionicframework.com) + Angular 1 template
+- Angular 2.0 and Angular 1.x + Ionic in ES6 with ng-upgrade path
+- [Ionic 1.x](http://ionicframework.com) + Angular 1.x template
 - Cordova 5 + Setup (Asset production to come...)
 - Uses ES6/ES7 with [Babel](https://babel.js) as transpiler to write modern-day JavaScript without the use of typescript
 - Use ES6 Modules via [SystemJS](https://github.com/systemjs/systemjs)
