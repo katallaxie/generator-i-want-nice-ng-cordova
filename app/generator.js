@@ -135,7 +135,9 @@ var Generator = (function (_Yeoman) {
       // karma
       this.template('karma.conf.js');
       // jspm
-      this.copy('jspm.config.js');
+      this.template('jspm.config.js');
+      // having the template as wanted
+      this.directory('../' + this.templates, this.destinationRoot() + '/src');
       // styles
       this.directory('src/styles');
       // images
@@ -152,8 +154,6 @@ var Generator = (function (_Yeoman) {
       this.copy('splash.png');
       // Write your files
       this.fs.write(this.destinationPath('README.md'), '# ' + this.app + '\n');
-      // having the template as wanted
-      this.directory('../' + this.templates, this.destinationRoot() + '/src');
     }
   }, {
     key: 'default',

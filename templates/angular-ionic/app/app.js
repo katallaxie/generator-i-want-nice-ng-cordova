@@ -8,7 +8,7 @@ import { Splash } from './components/splash/module';
 import { Dashboard } from './components/dashboard/module';
 
 // importable global name of the app
-const name = 'dds-scm-de';
+const name = 'demo';
 
 // app module
 let Boot = angular.module(name, [

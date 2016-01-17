@@ -3,7 +3,7 @@
  */
 module.exports = (grunt, config) => {
   return {
-    dist: {
+    all: {
       options: {
         dest: 'build'
       },
