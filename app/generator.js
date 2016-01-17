@@ -94,6 +94,20 @@ var Generator = (function (_Yeoman) {
       this.plugins = ['cordova-plugin-inappbrowser', 'com.ionic.keyboard', 'cordova-plugin-battery-status', 'cordova-plugin-camera', 'cordova-plugin-console', 'cordova-plugin-contacts', 'cordova-plugin-device-motion', 'cordova-plugin-device-orientation', 'cordova-plugin-device', 'cordova-plugin-dialogs', 'cordova-plugin-file-transfer', 'cordova-plugin-file',
       // 'cordova-plugin-whitelist',
       'cordova-plugin-geolocation', 'cordova-plugin-globalization', 'cordova-plugin-inappbrowser', 'cordova-plugin-media-capture', 'cordova-plugin-media', 'cordova-plugin-network-information', 'cordova-plugin-splashscreen', 'cordova-plugin-statusbar', 'cordova-plugin-vibration', 'cordova-plugin-flashlight', 'cordova-plugin-secure-storage', 'cordova-plugin-crosswalk-webview'];
+      // supported application templates
+      this.templates = [{
+        name: 'Angular 1.x + Ionic',
+        value: 'angular-ionic'
+      }, {
+        name: 'Angular 2',
+        value: 'angular2'
+      }];
+    }
+  }, {
+    key: 'configuring',
+    value: function configuring() {
+      this.isAngular2 = this.templates === 'angular2';
+      this.isAngular = !this.isAngular2;
     }
   }, {
     key: 'writing',
@@ -118,8 +132,12 @@ var Generator = (function (_Yeoman) {
       this.copy('_editorconfig', '.editorconfig');
       // eslint
       this.copy('_eslintrc', '.eslintrc');
+      // karma
+      this.template('karma.conf.js');
       // jspm
-      this.copy('jspm.config.js');
+      this.template('jspm.config.js');
+      // having the template as wanted
+      this.directory('../' + this.templates, this.destinationRoot() + '/src');
       // styles
       this.directory('src/styles');
       // images
@@ -130,6 +148,10 @@ var Generator = (function (_Yeoman) {
       this.directory('src/app');
       // index.html
       this.template('src/index.html');
+      // icon
+      this.copy('icon.png');
+      // splash
+      this.copy('splash.png');
       // Write your files
       this.fs.write(this.destinationPath('README.md'), '# ' + this.app + '\n');
     }
@@ -143,7 +165,7 @@ var Generator = (function (_Yeoman) {
     value: function installing() {
       // npm
       if (!this.options['skip-install']) {
-        this.runInstall('npm');
+        this.runInstall('npm', '');
       }
     }
   }, {
@@ -286,8 +308,53 @@ var Generator = (function (_Yeoman) {
             done();
           });
         },
-        askForPlugins: function askForPlugins() {
+        askForTemplates: function askForTemplates() {
           var _this7 = this;
+
+          // async
+          var done = this.async();
+          // displaying
+          var prompts = [{
+            type: 'list',
+            name: 'template',
+            message: 'What template you want to start with?',
+            choices: this.templates,
+            required: true,
+            store: true
+          }];
+
+          this.prompt(prompts, function (_ref6) {
+            var template = _ref6.template;
+
+            _this7.templates = template;
+            // resolve
+            done();
+          });
+        },
+        askForPhantomJS: function askForPhantomJS() {
+          var _this8 = this;
+
+          // async
+          var done = this.async();
+          // displaying
+          var prompts = [{
+            type: 'input',
+            name: 'phantomjs',
+            message: 'Where does your Phantom JS 2.x resides?',
+            default: process.env.PHANTOMJS_BIN,
+            store: true
+          }];
+
+          this.prompt(prompts, function (_ref7) {
+            var phantomjs = _ref7.phantomjs;
+
+            _this8.phantomjs = phantomjs;
+            // resolve
+            done();
+          });
+        },
+        askForPlugins: function askForPlugins() {
+          var _this9 = this;
 
           // async
           var done = this.async();
@@ -302,10 +369,10 @@ var Generator = (function (_Yeoman) {
             store: true
           }];
 
-          this.prompt(prompts, function (_ref6) {
-            var plugins = _ref6.plugins;
+          this.prompt(prompts, function (_ref8) {
+            var plugins = _ref8.plugins;
 
-            _this7.plugins = plugins.map(function (plugin) {
+            _this9.plugins = plugins.map(function (plugin) {
               return plugin.toLowerCase();
             });
             // resolve

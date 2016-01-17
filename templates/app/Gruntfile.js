@@ -1,18 +1,21 @@
 /**
  * Grunt - The JavaScript task runner http://gruntjs.com/
  */
-module.exports = (grunt) => { // trying to be nice
-  // timing of grunt tasks
-  require('time-grunt')(grunt);
 
-  // modules
-  const path = require('path');
-  const chalk = require('chalk');
+ // modules
+ const path = require('path');
+ const chalk = require('chalk');
+
+module.exports = (grunt) => { // trying to be nice
+  // syntax
+  'use strict';
+  // mapping
   const log = grunt.log;
   const file = grunt.file;
   const option = grunt.option;
   const cli = grunt.cli;
-
+  // timing of grunt tasks
+  require('time-grunt')(grunt);
   // reading package.json
   const pkg = file.readJSON('package.json');
   // root of the project
@@ -102,6 +105,8 @@ module.exports = (grunt) => { // trying to be nice
     jitGrunt: {
       staticMappings: {
         availabletasks: 'grunt-available-tasks',
+        splashs: 'grunt-cordova-splashs',
+        icons: 'grunt-cordova-icons',
         systemjs: 'grunt-systemjs-builder',
         usemin: 'grunt-usemin',
         useminPrepare: 'grunt-usemin'

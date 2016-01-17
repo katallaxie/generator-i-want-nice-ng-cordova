@@ -22,7 +22,7 @@
 .grunt
 
 # Node
-node_modules/
+node_modules
 
 # JSPM
 jspm_packages

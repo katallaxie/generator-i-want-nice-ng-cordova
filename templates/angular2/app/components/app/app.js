@@ -9,8 +9,8 @@ import {Component, View} from 'angular2/core';
 })
 
 class HelloWorldComponent {
-  name: string;
   constructor() {
+    this.name = '';
     setTimeout(() => {
       this.name = 'Angular 2.0';
     }, 1500);
