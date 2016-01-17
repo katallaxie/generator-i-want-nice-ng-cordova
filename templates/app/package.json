@@ -10,11 +10,7 @@
   "scripts": {
     "postinstall": "jspm install && grunt init",
     "start": "grunt fun",
-    "fun": "grunt fun",
-    "init": "grunt init",
-    "build": "grunt build",
-    "release": "grunt build",
-    "debug": "grunt debug"
+    "test": "grunt test"
   },
   "repository": "",
   "keywords": [
@@ -47,8 +43,8 @@
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-cordova-icons": "^0.1.2",
-    "grunt-cordova-splashs": "^0.1.1",
+    "grunt-cordova-icons": "^0.1.5",
+    "grunt-cordova-splashs": "^0.1.4",
     "grunt-cordovacli": "^0.8.2",
     "grunt-eslint": "^17.3.1",
     "grunt-filerev": "^2.3.1",
@@ -94,16 +90,59 @@
   "jspm": {
     "configFile": "jspm.config.js",
     "dependencies": {
-      "angular": "github:angular/bower-angular@^1.4.8",
+      <% if (isAngular) { %>
+      "angular": "npm:angular@1.5.0-rc.1",
+      "angular-animate": "npm:angular-animate@1.5.0-rc.1",
+      "angular-sanitize": "npm:angular-sanitize@1.5.0-rc.1",
+      "angular-ui-router": "github:angular-ui/ui-router@^0.2.15",
+      "ionic": "github:driftyco/ionic-bower@^1.2.4",
+      <% } %>
+      <% if (isAngular2) { %>
       "angular2": "npm:angular2@^2.0.0-beta.0",
+      <% } %>
       "css": "github:systemjs/plugin-css@^0.1.20",
       "json": "github:systemjs/plugin-json@^0.1.0",
+      "process": "github:jspm/nodelibs-process@^0.1.2",
       "text": "github:systemjs/plugin-text@^0.0.4"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
+    },
+    "overrides": {
+      <% if (isAngular) { %>
+      "github:driftyco/ionic-bower@1.2.4": {
+        "registry": "jspm",
+        "main": "js/ionic-angular",
+        "shim": {
+          "js/ionic-angular": {
+            "exports": "ionic",
+            "deps": [
+              "../css/ionic.css!",
+              "./ionic",
+              "angular",
+              "angular-animate",
+              "angular-sanitize",
+              "angular-ui-router"
+            ]
+          }
+        },
+        "dependencies": {
+          "css": "^0.1.5",
+          "angular": "^1.5.0-rc.1",
+          "angular-animate": "^1.5.0-rc.1",
+          "angular-sanitize": "^1.5.0-rc.1",
+          "angular-ui-router": "0.2.15"
+        }
+      },
+      "github:angular-ui/ui-router@0.2.15": {
+        "registry": "jspm",
+        "dependencies": {
+          "angular": "^1.5.0-rc.1"
+        }
+      }
+      <% } %>
     }
   }
 }

@@ -114,6 +114,10 @@ module.exports = (grunt, config) => { // passing in grunt and the config
         'newer:imagemin',
         // substitute
         'usemin',
+        // splash
+        'splashs',
+        // icons
+        'icons',
         // postprocess html
         'processhtml',
         // build test target

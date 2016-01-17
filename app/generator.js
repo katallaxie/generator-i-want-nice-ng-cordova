@@ -94,6 +94,20 @@ var Generator = (function (_Yeoman) {
       this.plugins = ['cordova-plugin-inappbrowser', 'com.ionic.keyboard', 'cordova-plugin-battery-status', 'cordova-plugin-camera', 'cordova-plugin-console', 'cordova-plugin-contacts', 'cordova-plugin-device-motion', 'cordova-plugin-device-orientation', 'cordova-plugin-device', 'cordova-plugin-dialogs', 'cordova-plugin-file-transfer', 'cordova-plugin-file',
       // 'cordova-plugin-whitelist',
       'cordova-plugin-geolocation', 'cordova-plugin-globalization', 'cordova-plugin-inappbrowser', 'cordova-plugin-media-capture', 'cordova-plugin-media', 'cordova-plugin-network-information', 'cordova-plugin-splashscreen', 'cordova-plugin-statusbar', 'cordova-plugin-vibration', 'cordova-plugin-flashlight', 'cordova-plugin-secure-storage', 'cordova-plugin-crosswalk-webview'];
+      // supported application templates
+      this.templates = [{
+        name: 'Angular 1.x + Ionic',
+        value: 'angular-ionic'
+      }, {
+        name: 'Angular 2',
+        value: 'angular2'
+      }];
+    }
+  }, {
+    key: 'configuring',
+    value: function configuring() {
+      this.isAngular2 = this.templates === 'angular2';
+      this.isAngular = !this.isAngular2;
     }
   }, {
     key: 'writing',
@@ -134,6 +148,10 @@ var Generator = (function (_Yeoman) {
       this.template('src/index.html');
       // Write your files
       this.fs.write(this.destinationPath('README.md'), '# ' + this.app + '\n');
+      // having the template as wanted
+      if (this.isAngular2) {
+        this.directory('../' + this.templates, this.destinationRoot() + '/src');
+      }
     }
   }, {
     key: 'default',
@@ -288,8 +306,31 @@ var Generator = (function (_Yeoman) {
             done();
           });
         },
-        askForPhantomJS: function askForPhantomJS() {
+        askForTemplates: function askForTemplates() {
           var _this7 = this;
+
+          // async
+          var done = this.async();
+          // displaying
+          var prompts = [{
+            type: 'list',
+            name: 'template',
+            message: 'What template you want to start with?',
+            choices: this.templates,
+            required: true,
+            store: true
+          }];
+
+          this.prompt(prompts, function (_ref6) {
+            var template = _ref6.template;
+
+            _this7.templates = template;
+            // resolve
+            done();
+          });
+        },
+        askForPhantomJS: function askForPhantomJS() {
+          var _this8 = this;
 
           // async
           var done = this.async();
@@ -302,16 +343,16 @@ var Generator = (function (_Yeoman) {
             store: true
           }];
 
-          this.prompt(prompts, function (_ref6) {
-            var phantomjs = _ref6.phantomjs;
+          this.prompt(prompts, function (_ref7) {
+            var phantomjs = _ref7.phantomjs;
 
-            _this7.phantomjs = phantomjs;
+            _this8.phantomjs = phantomjs;
             // resolve
             done();
           });
         },
         askForPlugins: function askForPlugins() {
-          var _this8 = this;
+          var _this9 = this;
 
           // async
           var done = this.async();
@@ -326,10 +367,10 @@ var Generator = (function (_Yeoman) {
             store: true
           }];
 
-          this.prompt(prompts, function (_ref7) {
-            var plugins = _ref7.plugins;
+          this.prompt(prompts, function (_ref8) {
+            var plugins = _ref8.plugins;
 
-            _this8.plugins = plugins.map(function (plugin) {
+            _this9.plugins = plugins.map(function (plugin) {
               return plugin.toLowerCase();
             });
             // resolve

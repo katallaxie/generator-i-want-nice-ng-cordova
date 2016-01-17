@@ -1,13 +1,12 @@
 /**
- * Grunt - eslint (https://github.com/sindresorhus/grunt-eslint)
+ * Grunt - systemjs (https://www.npmjs.com/package/grunt-systemjs-builder)
  */
 module.exports = (grunt, config) => {
   return {
     options: {
       sfx: true,
-      // baseURL: "./src",
       configFile: "./jspm.config.js",
-      minify: false,
+      minify: true,
       build: {
         mangle: false
       }

@@ -64,7 +64,18 @@ export default class Generator extends Yeoman {
       'cordova-plugin-flashlight',
       'cordova-plugin-secure-storage',
       'cordova-plugin-crosswalk-webview'
-    ]
+    ];
+    // supported application templates
+    this.templates = [
+      {
+        name : 'Angular 1.x + Ionic',
+        value: 'angular-ionic'
+      },
+      {
+        name: 'Angular 2',
+        value: 'angular2'
+      }
+    ];
   }
 
   get prompting() {
@@ -180,6 +191,26 @@ export default class Generator extends Yeoman {
         });
       },
 
+      askForTemplates () {
+        // async
+        let done = this.async();
+        // displaying
+        let prompts = [{
+          type: 'list',
+          name: 'template',
+          message: `What template you want to start with?`,
+          choices: this.templates,
+          required: true,
+          store: true
+        }];
+
+        this.prompt(prompts, ( { template } ) => {
+          this.templates = template;
+          // resolve
+          done();
+        });
+      },
+
       askForPhantomJS () {
         // async
         let done = this.async();
@@ -223,6 +254,11 @@ export default class Generator extends Yeoman {
     };
   }
 
+  configuring () {
+    this.isAngular2 = this.templates === 'angular2';
+    this.isAngular = !this.isAngular2;
+  }
+
   writing() {
     // creating the www for Cordova
     try {
@@ -231,35 +267,43 @@ export default class Generator extends Yeoman {
       if ( error.code != 'EEXIST' ) throw error;
     }
     // grunt
-    this.directory('grunt');
-    this.template('Gruntfile.js');
+    this.directory( 'grunt' );
+    this.template( 'Gruntfile.js' );
     // cordova
-    this.copy('build.json');
+    this.copy( 'build.json' );
     // npm
-    this.template('package.json', 'package.json');
+    this.template( 'package.json', 'package.json' );
     // git
-    this.copy('_gitignore', '.gitignore');
-    this.copy('_gitattributes', '.gitattributes');
+    this.copy( '_gitignore', '.gitignore' );
+    this.copy( '_gitattributes', '.gitattributes' );
     // editorconfig
-    this.copy('_editorconfig', '.editorconfig');
+    this.copy( '_editorconfig', '.editorconfig' );
     // eslint
-    this.copy('_eslintrc', '.eslintrc');
+    this.copy( '_eslintrc', '.eslintrc' );
     // karma
-    this.template('karma.conf.js');
+    this.template( 'karma.conf.js' );
     // jspm
-    this.copy('jspm.config.js');
+    this.copy( 'jspm.config.js' );
     // styles
-    this.directory('src/styles');
+    this.directory( 'src/styles' );
     // images
-    this.directory('src/images');
+    this.directory( 'src/images' );
     // fonts
-    this.directory('src/fonts');
+    this.directory( 'src/fonts' );
     // app templates
-    this.directory('src/app');
+    this.directory( 'src/app' );
     // index.html
-    this.template('src/index.html');
+    this.template( 'src/index.html' );
+    // icon
+    this.copy( 'icon.png' );
+    // splash
+    this.copy( 'splash.png' );
     // Write your files
-    this.fs.write(this.destinationPath('README.md'), `# ${ this.app }\n`);
+    this.fs.write( this.destinationPath( 'README.md' ), `# ${ this.app }\n` );
+    // having the template as wanted
+    if ( this.isAngular2 ) {
+      this.directory( `../${this.templates}`, `${this.destinationRoot()}/src` );
+    }
   }
 
   default() {
@@ -269,7 +313,7 @@ export default class Generator extends Yeoman {
   installing() {
     // npm
     if (!this.options['skip-install']) {
-      this.runInstall('npm');
+      this.runInstall('npm', '', '--quiet');
     }
   }
 

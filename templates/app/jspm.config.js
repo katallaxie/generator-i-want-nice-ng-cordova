@@ -5,7 +5,8 @@ System.config({
   babelOptions: {
     "stage": 1,
     "optional": [
-      "runtime"
+      "runtime",
+      "optimisation.modules.system"
     ]
   },
   paths: {
@@ -14,7 +15,6 @@ System.config({
   },
 
   map: {
-    "app": ".",
     "boot": "./app/app",
     "angular": "github:angular/bower-angular@1.4.8",
     "angular2": "npm:angular2@2.0.0-beta.0",
