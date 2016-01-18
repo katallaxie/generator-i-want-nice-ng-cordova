@@ -18,4 +18,4 @@
 .Trashes
 .VolumeIcon.icns
 *.log
-node_modules/
+node_modules
