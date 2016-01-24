@@ -3,7 +3,10 @@
   "name": "<%= appname %>",
   "version": "0.0.0",
   "description": "<%= description %>",
-  "author": "<%= author %>",
+  "author": {
+    "name": "<%= author.email %>",
+    "email": "<%= author.name %>"
+  },
   "contributors": [
     {}
   ],
@@ -12,7 +15,7 @@
     "start": "grunt fun",
     "test": "grunt test"
   },
-  "repository": "",
+  "repository": "<%= git %>",
   "keywords": [
     "angular",
     "cordova"

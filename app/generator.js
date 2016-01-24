@@ -45,6 +45,10 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
+var _gitconfiglocal = require('gitconfiglocal');
+
+var _gitconfiglocal2 = _interopRequireDefault(_gitconfiglocal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70,15 +74,19 @@ var Generator = (function (_Yeoman) {
       args[_key] = arguments[_key];
     }
 
+    // have app as parameter
+
     var _this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Generator)).call.apply(_Object$getPrototypeO, [this].concat(args)));
     // call super class with arguments
 
-    console.log(_this.user.git.email());
-
-    // have app as parameter
     _this.argument('appname', {
       type: String,
       defaults: _path2.default.basename(process.cwd())
+    });
+
+    // read local git config
+    (0, _gitconfiglocal2.default)('./', function (error, config) {
+      _this.git = !error && config.remote ? config.remote.origin.url : 'https://';
     });
     return _this;
   }
@@ -93,7 +101,10 @@ var Generator = (function (_Yeoman) {
       // supported plugins
       this.plugins = ['cordova-plugin-inappbrowser', 'com.ionic.keyboard', 'cordova-plugin-battery-status', 'cordova-plugin-camera', 'cordova-plugin-console', 'cordova-plugin-contacts', 'cordova-plugin-device-motion', 'cordova-plugin-device-orientation', 'cordova-plugin-device', 'cordova-plugin-dialogs', 'cordova-plugin-file-transfer', 'cordova-plugin-file',
       // 'cordova-plugin-whitelist',
-      'cordova-plugin-geolocation', 'cordova-plugin-globalization', 'cordova-plugin-inappbrowser', 'cordova-plugin-media-capture', 'cordova-plugin-media', 'cordova-plugin-network-information', 'cordova-plugin-splashscreen', 'cordova-plugin-statusbar', 'cordova-plugin-vibration', 'cordova-plugin-flashlight', 'cordova-plugin-secure-storage', 'cordova-plugin-crosswalk-webview'];
+      'cordova-plugin-geolocation', 'cordova-plugin-globalization', 'cordova-plugin-inappbrowser', 'cordova-plugin-media-capture',
+      // is unsupported
+      // 'cordova-plugin-media',
+      'cordova-plugin-network-information', 'cordova-plugin-splashscreen', 'cordova-plugin-statusbar', 'cordova-plugin-vibration', 'cordova-plugin-flashlight', 'cordova-plugin-secure-storage', 'cordova-plugin-crosswalk-webview'];
       // supported application templates
       this.templates = [{
         name: 'Angular 1.x + Ionic',
@@ -123,6 +134,7 @@ var Generator = (function (_Yeoman) {
       this.template('Gruntfile.js');
       // cordova
       this.copy('build.json');
+      this.template('cordova.xml');
       // npm
       this.template('package.json', 'package.json');
       // git
@@ -165,7 +177,7 @@ var Generator = (function (_Yeoman) {
     value: function installing() {
       // npm
       if (!this.options['skip-install']) {
-        this.runInstall('npm', '');
+        this.runInstall('npm', '', { loglevel: 'error' });
       }
     }
   }, {
@@ -210,7 +222,7 @@ var Generator = (function (_Yeoman) {
             done();
           });
         },
-        askForAuthor: function askForAuthor() {
+        askForGit: function askForGit() {
           var _this3 = this;
 
           // async
@@ -218,16 +230,34 @@ var Generator = (function (_Yeoman) {
           // displaying
           var prompts = [{
             type: 'input',
-            name: 'author',
-            message: 'Who is the author? It\'s you, right?',
+            name: 'name',
+            message: 'What is your name?',
+            default: this.user.git.name(),
+            store: true
+          }, {
+            type: 'input',
+            name: 'email',
+            message: 'What is your email?',
             default: this.user.git.email(),
+            store: true
+          }, {
+            type: 'input',
+            name: 'git',
+            message: 'What is the uri of your git?',
+            default: this.git,
             store: true
           }];
 
           this.prompt(prompts, function (_ref2) {
-            var author = _ref2.author;
+            var name = _ref2.name;
+            var email = _ref2.email;
+            var git = _ref2.git;
 
-            _this3.author = author;
+            _this3.author = {
+              name: name,
+              email: email
+            };
+            _this3.git = git;
             // resolve
             done();
           });

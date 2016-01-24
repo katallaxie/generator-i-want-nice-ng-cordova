@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="<%= id %>" version="0.0.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns="http://www.w3.org/ns/widgets">
+  <name><%= appname %></name>
+  <description><%= description %></description>
+
+  <author>
+    The most incredible author of all time; lol.
+  </author>
+
+  <content src="index.html"/>
+
+  <access origin="*"/>
+
+  <preference name="AutoHideSplashScreen" value="true"/>
+  <preference name="SplashScreenDelay" value="30000" />
+  <preference name="orientation" value="default"/>
+  <preference name="HideKeyboardFormAccessoryBar" value="false"/>
+  <preference name="BackupWebStorage" value="cloud"/>
+
+
+  <allow-navigation href="http://*/*"/>
+  <allow-navigation href="https://*/*"/>
+  <allow-navigation href="data:*"/>
+
+  <allow-intent href="tel:*"/>
+  <allow-intent href="itms:*"/>
+  <allow-intent href="itms-apps:*"/>
+  <allow-intent href="market:*"/>
+
+  <platform name="ios">
+    <!-- The targeted devices; so either iPhone, or iPad -->
+    <preference name="target-device" value="universal"/>
+    <preference name="deployment-target" value="7.0"/>
+
+    <!-- iOS 8.0+ -->
+    <!-- iPhone 6 Plus  -->
+    <icon height="180" src="res/icons/ios/icon-60@3x.png" width="180"/>
+    <!-- iOS 7.0+ -->
+    <!-- iPhone / iPod Touch  -->
+    <icon height="60" src="res/icons/ios/icon-60.png" width="60"/>
+    <icon height="120" src="res/icons/ios/icon-60@2x.png" width="120"/>
+    <!-- iPad -->
+    <icon height="76" src="res/icons/ios/icon-76.png" width="76"/>
+    <icon height="152" src="res/icons/ios/icon-76@2x.png" width="152"/>
+    <!-- iOS 6.1 -->
+    <!-- Spotlight Icon -->
+    <icon height="40" src="res/icons/ios/icon-40.png" width="40"/>
+    <icon height="80" src="res/icons/ios/icon-40@2x.png" width="80"/>
+    <!-- iPhone / iPod Touch -->
+    <icon height="57" src="res/icons/ios/icon.png" width="57"/>
+    <icon height="114" src="res/icons/ios/icon@2x.png" width="114"/>
+    <!-- iPad -->
+    <icon height="72" src="res/icons/ios/icon-72.png" width="72"/>
+    <icon height="144" src="res/icons/ios/icon-72@2x.png" width="144"/>
+    <!-- iPhone Spotlight and Settings Icon -->
+    <icon height="29" src="res/icons/ios/icon-small.png" width="29"/>
+    <icon height="58" src="res/icons/ios/icon-small@2x.png" width="58"/>
+    <!-- iPad Spotlight and Settings Icon -->
+    <icon height="50" src="res/icons/ios/icon-50.png" width="50"/>
+    <icon height="100" src="res/icons/ios/icon-50@2x.png" width="100"/>
+
+    <!-- Splash Screens -->
+    <splash height="480" src="res/splashs/ios/Default~iphone.png" width="320"/>
+    <splash height="960" src="res/splashs/ios/Default@2x~iphone.png" width="640"/>
+    <splash height="1024" src="res/splashs/ios/Default-Portrait~ipad.png" width="768"/>
+    <splash height="2048" src="res/splashs/ios/Default-Portrait@2x~ipad.png" width="1536"/>
+    <splash height="768" src="res/splashs/ios/Default-Landscape~ipad.png" width="1024"/>
+    <splash height="1536" src="res/splashs/ios/Default-Landscape@2x~ipad.png" width="2048"/>
+    <splash height="1136" src="res/splashs/ios/Default-568h@2x~iphone.png" width="640"/>
+    <splash height="1334" src="res/splashs/ios/Default-667h.png" width="750"/>
+    <splash height="2208" src="res/splashs/ios/Default-736h.png" width="1242"/>
+    <splash height="1242" src="res/splashs/ios/Default-Landscape-736h.png" width="2208"/>
+
+  </platform>
+
+  <platform name="android">
+    <!-- Icons -->
+    <icon density="hdpi" src="res/icons/android/hdpi.png"/>
+    <icon density="mdpi" src="res/icons/android/mdpi.png"/>
+    <icon density="xhdpi" src="res/icons/android/xhdpi.png"/>
+    <icon density="xxhdpi" src="res/icons/android/xxhdpi.png"/>
+    <icon density="xxxhdpi" src="res/icons/android/xxxhdpi.png"/>
+
+    <!-- Splash Screens -->
+    <splash density="port-hdpi" src="res/splashs/android/splash-port-hdpi.png"/>
+    <splash density="port-ldpi" src="res/splashs/android/splash-port-ldpi.png"/>
+    <splash density="port-mdpi" src="res/splashs/android/splash-port-mdpi.png"/>
+    <splash density="port-xhdpi" src="res/splashs/android/splash-port-xhdpi.png"/>
+    <splash density="port-xxhdpi" src="res/splashs/android/splash-port-xxhdpi.png"/>
+    <splash density="port-xxxhdpi" src="res/splashs/android/splash-port-xxxhdpi.png"/>
+  </platform>
+
+</widget>

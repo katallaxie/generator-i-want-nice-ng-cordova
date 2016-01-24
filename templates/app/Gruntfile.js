@@ -2,13 +2,13 @@
  * Grunt - The JavaScript task runner http://gruntjs.com/
  */
 
- // modules
- const path = require('path');
- const chalk = require('chalk');
-
 module.exports = (grunt) => { // trying to be nice
   // syntax
   'use strict';
+  // modules
+  const path = require('path');
+  const chalk = require('chalk');
+  const fs = require('fs');
   // mapping
   const log = grunt.log;
   const file = grunt.file;
@@ -119,4 +119,20 @@ module.exports = (grunt) => { // trying to be nice
     // allows to manipulate the config object before it gets merged with the data object
     preMerge: function(config, data) {}
   });
+
+  // cordova local setup
+  grunt.registerTask('cordova', function () {
+    let done = this.async();
+    log.ok( 'Setting up Cordova ...' );
+    // delete config
+    try {
+      fs.unlinkSync('./build/config.xml');
+    } catch (error) {
+      log.warn( 'Could not delete prototypical config.xml' );
+    }
+    grunt.file.copy( './cordova.xml', './build/config.xml' );
+    //
+    done(); log.ok( 'Done!' );
+  });
+
 };

@@ -49,7 +49,9 @@ module.exports = (grunt, config) => { // passing in grunt and the config
         // configuring the platforms
         'cordovacli:platforms',
         // configuring the plugins
-        'cordovacli:plugins'
+        'cordovacli:plugins',
+        // cordova setup
+        'cordova'
       ]
     },
     // alias to release
@@ -87,6 +89,8 @@ module.exports = (grunt, config) => { // passing in grunt and the config
         'icons',
         // postprocess html
         'processhtml',
+        // cordova setup
+        'cordova',
         // build test target
         'cordovacli:release'
       ]
@@ -120,6 +124,8 @@ module.exports = (grunt, config) => { // passing in grunt and the config
         'icons',
         // postprocess html
         'processhtml',
+        // cordova setup
+        'cordova',
         // build test target
         'cordovacli:debug'
       ]

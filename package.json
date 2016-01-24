@@ -31,6 +31,7 @@
     "babel-preset-es2016-node5": "^1.1.2",
     "babel-register": "^6.3.13",
     "chalk": "^1.1.1",
+    "gitconfiglocal": "^2.0.1",
     "grunt-eslint": "^17.3.1",
     "lodash": "^3.10.1",
     "underscore.string": "^3.2.2",
