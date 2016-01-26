@@ -5,10 +5,8 @@ module.exports = (grunt, config) => {
   return {
     all: { // distribution is with compressed css
       options: {
-        style: 'expanded',
-        require: [
-          // sass modules go here
-        ]
+        outputStyle: 'expanded',
+        sourceMap: true
       },
       files: [{
         expand: true,

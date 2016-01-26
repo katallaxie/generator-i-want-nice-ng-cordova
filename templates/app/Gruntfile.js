@@ -19,7 +19,7 @@ module.exports = (grunt) => { // trying to be nice
   // reading package.json
   const pkg = file.readJSON('package.json');
   // root of the project
-  const root = process.cwd();
+  const root = path.resolve( __dirname );
 
   // some dev sweetness and madness
   option('force', (cli.tasks[0] === 'dev' || cli.tasks[0] === 'fun') && !option('help'));
