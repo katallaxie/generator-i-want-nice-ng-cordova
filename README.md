@@ -1,6 +1,6 @@
-# Next Generation Angular 2 + Cordova Generator
+# Next Generation Angular + Cordova Generator
 
-> Experimental Yeoman generator for your next and next-gen Angular 2 +  Cordova project - lets you quickly set up a project with recent technologies in mind.
+> Experimental Yeoman generator for your next and next-gen Angular 1.x or 2 +  Cordova project - lets you quickly set up a project with recent technologies in mind.
 
 The generator is coded in [ES6](https://github.com/lukehoban/es6features) with [Babel](https://babeljs.io/) as polyfill. Thus, it avoids much of the overhead in creating the generator.
 
@@ -21,7 +21,7 @@ The generator is coded in [ES6](https://github.com/lukehoban/es6features) with [
 > Only supported platforms are iOS and Android
 
 ## Todo
-- Unit testing and E2E (Karma & Nightwatch + Appium)
+- Smoke Testing & E2E (Karma & Nightwatch + Appium)
 - Deployment to stores
 - More tide integration
 - ... many more things
@@ -82,7 +82,7 @@ or
 grunt fun
 ```
 
-### Debug && Release
+### Debug & Release
 
 As to to have a release build you have to provide a keystore and information in `build.json`.
 

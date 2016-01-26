@@ -46,6 +46,10 @@ module.exports = (grunt, config) => { // passing in grunt and the config
         'cordovacli:create',
         // configuring cordova
         'cordova',
+        // icons
+        'icons',
+        // splashs,
+        'splashs',
         // configuring the platforms
         'cordovacli:platforms',
         // configuring the plugins
