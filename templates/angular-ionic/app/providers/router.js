@@ -11,15 +11,15 @@ class RouterProvider extends Inject {
   }
 
   $get ( { $stateProvider } = this.$inject ) {
-    return {
-      route: function ( states = [] ) {
+    class Router {
+      route ( states = [] ) {
         states.forEach( state => {
           $stateProvider.state( state.name, state.config );
         } );
       }
-    };
+    }
+    return new Router($stateProvider);
   }
-
 }
 
 class Route extends Inject {

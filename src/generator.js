@@ -12,6 +12,7 @@ import {default as Pkg} from '../package.json';
 import {default as _} from 'lodash';
 import {default as s} from 'underscore.string';
 import {default as Fs} from 'fs';
+import {default as Git} from 'gitconfiglocal';
 
 // init
 _.mixin(s.exports());
@@ -23,12 +24,15 @@ export default class Generator extends Yeoman {
     // call super class with arguments
     super(...args);
 
-    console.log(this.user.git.email());
-
     // have app as parameter
     this.argument('appname', {
       type: String,
       defaults: Path.basename(process.cwd())
+    });
+
+    // read local git config
+    Git('./', (error, config) => {
+      this.git = ! error && config.remote ? config.remote.origin.url : 'https://';
     });
   }
 
@@ -56,7 +60,8 @@ export default class Generator extends Yeoman {
       'cordova-plugin-globalization',
       'cordova-plugin-inappbrowser',
       'cordova-plugin-media-capture',
-      'cordova-plugin-media',
+      // is unsupported
+      // 'cordova-plugin-media',
       'cordova-plugin-network-information',
       'cordova-plugin-splashscreen',
       'cordova-plugin-statusbar',
@@ -107,20 +112,36 @@ export default class Generator extends Yeoman {
         });
       },
 
-      askForAuthor() {
+      askForGit() {
         // async
         let done = this.async();
         // displaying
         let prompts = [{
           type: 'input',
-          name: 'author',
-          message: `Who is the author? It's you, right?`,
+          name: 'name',
+          message: `What is your name?`,
+          default: this.user.git.name(),
+          store: true
+        }, {
+          type: 'input',
+          name: 'email',
+          message: `What is your email?`,
           default: this.user.git.email(),
+          store: true
+        }, {
+          type: 'input',
+          name: 'git',
+          message: `What is the uri of your git?`,
+          default: this.git,
           store: true
         }];
 
-        this.prompt(prompts, ( { author } ) => {
-          this.author = author;
+        this.prompt(prompts, ( { name, email, git } ) => {
+          this.author = {
+            name: name,
+            email: email
+          };
+          this.git = git;
           // resolve
           done();
         });
@@ -271,6 +292,7 @@ export default class Generator extends Yeoman {
     this.template( 'Gruntfile.js' );
     // cordova
     this.copy( 'build.json' );
+    this.template( 'cordova.xml' );
     // npm
     this.template( 'package.json', 'package.json' );
     // git
@@ -311,7 +333,7 @@ export default class Generator extends Yeoman {
   installing() {
     // npm
     if (!this.options['skip-install']) {
-      this.runInstall('npm', '');
+      this.runInstall('npm', '', { loglevel: 'error' });
     }
   }
 

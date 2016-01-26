@@ -2,24 +2,29 @@
  * Grunt - The JavaScript task runner http://gruntjs.com/
  */
 
- // modules
- const path = require('path');
- const chalk = require('chalk');
-
-module.exports = (grunt) => { // trying to be nice
+module.exports = grunt => { // trying to be nice
   // syntax
   'use strict';
+
+  // modules
+  const chalk = require('chalk');
+  const fs = require('fs');
+  const path = require('path');
+  const xml2js = require('xml2js');
+
   // mapping
   const log = grunt.log;
   const file = grunt.file;
   const option = grunt.option;
   const cli = grunt.cli;
+
   // timing of grunt tasks
   require('time-grunt')(grunt);
+
   // reading package.json
   const pkg = file.readJSON('package.json');
   // root of the project
-  const root = process.cwd();
+  const root = path.resolve( __dirname );
 
   // some dev sweetness and madness
   option('force', (cli.tasks[0] === 'dev' || cli.tasks[0] === 'fun') && !option('help'));
@@ -96,8 +101,8 @@ module.exports = (grunt) => { // trying to be nice
       cordova: {
         cli: 'cordova',
         build: `${root}/build.json`,
-        platforms: <%- JSON.stringify(platforms) %>,
-        plugins: <%- JSON.stringify(plugins) %>
+        platforms: ["ios","android"],
+        plugins: ["cordova-plugin-inappbrowser","com.ionic.keyboard","cordova-plugin-battery-status","cordova-plugin-camera","cordova-plugin-console","cordova-plugin-contacts","cordova-plugin-device-motion","cordova-plugin-device-orientation","cordova-plugin-device","cordova-plugin-dialogs","cordova-plugin-file-transfer","cordova-plugin-file","cordova-plugin-geolocation","cordova-plugin-globalization","cordova-plugin-inappbrowser","cordova-plugin-media-capture","cordova-plugin-network-information","cordova-plugin-splashscreen","cordova-plugin-statusbar","cordova-plugin-vibration","cordova-plugin-flashlight","cordova-plugin-secure-storage","cordova-plugin-crosswalk-webview"]
       }
     },
 
@@ -119,4 +124,51 @@ module.exports = (grunt) => { // trying to be nice
     // allows to manipulate the config object before it gets merged with the data object
     preMerge: function(config, data) {}
   });
+
+  // cordova local setup
+  grunt.registerTask('cordova', function () {
+    // async
+    let done = this.async();
+
+    log.ok( 'Configuring Cordova ...' );
+
+    // delete config
+    try {
+      fs.unlinkSync( path.resolve( root, 'build/config.xml' ) );
+    } catch (error) {
+      log.warn( 'Could not delete prototypical config.xml' );
+    }
+
+    // copy new config
+    grunt.file.copy( path.resolve( root, 'cordova.xml' ), path.resolve( root, 'build/config.xml') );
+
+    // write version
+    // shared instance of parser
+    const parser = new xml2js.Parser();
+
+    // reading in sync; because, you know, that's the way ;)
+    let config = fs.readFileSync( path.resolve( root, 'build/config.xml' ) );
+
+    // parsing config
+    parser.parseString( config, ( error, result ) => {
+      if ( error ) throw error;
+      config = result; // hijacking
+    } );
+
+    // setting some properties
+    config.widget['$'].id = pkg.id;
+    config.widget['$'].version = pkg.version;
+    config.widget.name = pkg.name;
+    config.widget.description = pkg.description;
+
+    // builder
+    const builder = new xml2js.Builder();
+    const xml = builder.buildObject(config);
+
+    // write new config
+    fs.writeFileSync( path.resolve( root, 'build/config.xml' ), xml );
+
+    done(); log.ok( 'Done!' );
+  });
+
 };
