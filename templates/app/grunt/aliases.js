@@ -45,13 +45,11 @@ module.exports = (grunt, config) => { // passing in grunt and the config
         // init cordova
         'cordovacli:create',
         // configuring cordova
-        // 'cordova:config',
+        'cordova',
         // configuring the platforms
         'cordovacli:platforms',
         // configuring the plugins
-        'cordovacli:plugins',
-        // cordova setup
-        'cordova'
+        'cordovacli:plugins'
       ]
     },
     // alias to release
