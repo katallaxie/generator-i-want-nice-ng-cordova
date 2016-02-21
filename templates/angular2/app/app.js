@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import 'zone.js/lib/browser/zone-microtask';
+import 'zone.js/dist/zone-microtask';
 
 import {bootstrap} from 'angular2/platform/browser';
 

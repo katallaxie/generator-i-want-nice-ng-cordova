@@ -1,6 +1,6 @@
 {
   "name": "generator-i-want-nice-ng-cordova",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "An Angular 2.x and ng-upgrade generator for your next Cordova project. Designed and coded with the use of hipster technologies (e.g. ES6/7 + Babel etc) and much fun in mind.",
   "homepage": "https://github.com/katallaxie",
   "author": {
